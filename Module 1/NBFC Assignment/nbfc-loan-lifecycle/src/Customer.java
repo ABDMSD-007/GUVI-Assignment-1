@@ -1,26 +1,18 @@
-// ============================================================
-//  Customer.java  —  Extends Person (Inheritance + Encapsulation)
-//
-//  OOP Concepts:
 //    Inheritance  — extends Person, reuses name/age
 //    Polymorphism — overrides displayInfo()
-//    Encapsulation — private fields with getters/setters
-// ============================================================
 
 public class Customer extends Person {
 
-    // Encapsulation: private fields
     private String customerId;
     private double monthlyIncome;
-    private int creditScore; // 300 – 900
+    private int creditScore;
     private String city;
 
-    // Constructor — calls Person's constructor via super()
     public Customer(String customerId, String name, int age,
             double monthlyIncome,
             int creditScore, String city) {
 
-        super(name, age); // Inheritance — parent constructor
+        super(name, age);
         this.customerId = customerId;
         this.monthlyIncome = monthlyIncome;
         this.creditScore = creditScore;
@@ -30,14 +22,13 @@ public class Customer extends Person {
     @Override
     public void displayInfo() {
         System.out.println("Customer Profile:");
-        displayBasicInfo(); // Inheritance - reusing parent method
+        displayBasicInfo();
         System.out.println("  ID     : " + customerId);
         System.out.println("  Income : Rs. " + (int) monthlyIncome + "/month");
         System.out.println("  Credit : " + creditScore + " / 900");
         System.out.println("  City   : " + city);
     }
 
-    // Getters
     public String getCustomerId() {
         return customerId;
     }
@@ -54,7 +45,6 @@ public class Customer extends Person {
         return city;
     }
 
-    // Setter with validation (Encapsulation)
     public void setCreditScore(int creditScore) {
         if (creditScore >= 300 && creditScore <= 900) {
             this.creditScore = creditScore;
