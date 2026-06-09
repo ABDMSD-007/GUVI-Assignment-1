@@ -1,22 +1,16 @@
-// LoanApplication.java - Core lifecycle class
-// Concepts: Encapsulation, Aggregation, While loop, Switch case
-
 public class LoanApplication {
 
-    // Encapsulation: private fields
     private String      applicationId;
     private String      status;
     private double      loanAmount;
     private int         tenureMonths;
 
-    // Aggregation: Customer and LoanProduct exist independently
+    // Aggregationy
     private Customer    customer;
     private LoanProduct loanProduct;
 
-    // EMI stored after approval
     private double      monthlyEMI;
 
-    // Constructor
     public LoanApplication(String applicationId, Customer customer,
                            LoanProduct loanProduct, double loanAmount,
                            int tenureMonths) {
@@ -29,16 +23,15 @@ public class LoanApplication {
         this.monthlyEMI         = 0;
     }
 
-    // Walks through the loan lifecycle using a while loop and switch case
     public void processLoan() {
         System.out.println("Processing: " + applicationId + " [" + loanProduct.getProductName() + "]");
 
         int step = 1;
-        boolean processing = true;   // while loop control flag
+        boolean processing = true;
 
-        while (processing) {         // while loop - runs until loan is done
+        while (processing) {
 
-            switch (step) {          // switch case - one case per lifecycle stage
+            switch (step) {
 
                 case 1:
                     System.out.println("Step 1: Document Verification - VERIFIED");
@@ -64,7 +57,7 @@ public class LoanApplication {
                         step = 4;
                     } else {
                         status = "REJECTED";
-                        processing = false;   // stop the while loop
+                        processing = false;
                         System.out.println("Result: APPLICATION REJECTED");
                     }
                     break;
@@ -75,34 +68,30 @@ public class LoanApplication {
                     System.out.println("Interest Rate: " + loanProduct.getInterestRate() + "%");
                     System.out.printf("Monthly EMI: Rs. %.2f%n", monthlyEMI);
                     status = "APPROVED";
-                    System.out.println("Result: LOAN APPROVED - Rs. " + (int) loanAmount +
-                                       " disbursed to " + customer.getName());
-                    processing = false;       // stop the while loop
+                    System.out.println("Result: LOAN APPROVED - Rs. " + (int) loanAmount +" disbursed to " + customer.getName());
+                    processing = false;
                     break;
 
                 default:
                     System.out.println("Unknown step.");
                     processing = false;
             }
-        } // end while
+        }
 
         System.out.println("Final Status: " + status);
     }
-
-    // Summary printout
     public void displaySummary() {
         System.out.println("Summary for " + applicationId + ":");
-        System.out.println("  Customer  : " + customer.getName());
-        System.out.println("  Loan Type : " + loanProduct.getProductName());
-        System.out.println("  Amount    : Rs. " + (int) loanAmount);
-        System.out.println("  Tenure    : " + tenureMonths + " months");
-        System.out.println("  Status    : " + status);
+        System.out.println("Customer: " + customer.getName());
+        System.out.println("Loan Type: " + loanProduct.getProductName());
+        System.out.println("Amount: Rs. " + (int) loanAmount);
+        System.out.println("Tenure: " + tenureMonths + " months");
+        System.out.println("Status: " + status);
         if (monthlyEMI > 0) {
-            System.out.printf("  EMI       : Rs. %.2f/month%n", monthlyEMI);
+            System.out.printf("EMI: Rs. %.2f/month%n", monthlyEMI);
         }
     }
 
-    // Getters
     public String      getApplicationId() { return applicationId; }
     public String      getStatus()        { return status;        }
     public Customer    getCustomer()      { return customer;      }
