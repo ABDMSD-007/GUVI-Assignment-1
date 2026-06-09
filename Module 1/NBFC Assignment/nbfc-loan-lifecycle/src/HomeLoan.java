@@ -1,24 +1,18 @@
-// ============================================================
-//  HomeLoan.java  —  Extends LoanProduct (Inheritance + Polymorphism)
-//
-//  OOP Concepts:
-//    Inheritance  — extends LoanProduct
-//    Polymorphism — overrides getMaxLoanAmount() and checkEligibility()
-// ============================================================
+
+// Inheritance  — extends LoanProduct
+// Polymorphism — overrides getMaxLoanAmount() and checkEligibility()
 
 public class HomeLoan extends LoanProduct {
 
     public HomeLoan() {
-        super("Home Loan", 8.5, 240);  // 8.5% interest, max 240 months (20 years)
+        super("Home Loan", 8.5, 240);  // 8.5% interest, max 240 months
     }
 
-    // Polymorphism: override abstract method from LoanProduct
     @Override
     public double getMaxLoanAmount() {
         return 10000000.0;  // Rs. 1 Crore
     }
 
-    // Polymorphism: home loan has stricter eligibility rules
     @Override
     public boolean checkEligibility(Customer customer, double loanAmount) {
         boolean creditOk  = customer.getCreditScore() >= 700;
