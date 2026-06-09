@@ -1,24 +1,17 @@
-// ============================================================
-//  BusinessLoan.java  —  Extends LoanProduct (Inheritance + Polymorphism)
-//
-//  OOP Concepts:
-//    Inheritance  — extends LoanProduct
-//    Polymorphism — overrides getMaxLoanAmount() and checkEligibility()
-// ============================================================
+// Inheritance  — extends LoanProduct
+// Polymorphism — overrides getMaxLoanAmount() and checkEligibility()
 
 public class BusinessLoan extends LoanProduct {
 
     public BusinessLoan() {
-        super("Business Loan", 14.0, 84);  // 14% interest, max 84 months (7 years)
+        super("Business Loan", 14.0, 84);  // 14% interest, max 84 months
     }
 
-    // Polymorphism: override abstract method from LoanProduct
     @Override
     public double getMaxLoanAmount() {
-        return 5000000.0;  // Rs. 50 Lakhs
+        return 5000000.0;
     }
 
-    // Polymorphism: business loan checks eligibility differently
     @Override
     public boolean checkEligibility(Customer customer, double loanAmount) {
         boolean creditOk  = customer.getCreditScore() >= 680;
