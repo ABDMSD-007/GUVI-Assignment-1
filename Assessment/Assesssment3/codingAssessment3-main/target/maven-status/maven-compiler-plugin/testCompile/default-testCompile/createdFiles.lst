@@ -1,0 +1,9 @@
+service\LibraryAnalyticsTest$FinalChallengeTests.class
+service\LibraryAnalyticsTest$MostBorrowedBookTests.class
+service\LibraryAnalyticsTest$AverageRatingByCategoryTests.class
+service\LibraryAnalyticsTest$SuspiciousBooksTests.class
+service\LibraryAnalyticsTest.class
+service\LibraryAnalyticsTest$LoadBooksTests.class
+service\LibraryAnalyticsTest$AuthorsWithMultipleCategoriesTests.class
+service\LibraryAnalyticsTest$GroupBooksByAuthorTests.class
+service\LibraryAnalyticsTest$TopRatedBooksTests.class

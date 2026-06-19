@@ -1,0 +1,17 @@
+-------------------------------------------------------------------------------
+Test set: service.LibraryAnalyticsTest$FinalChallengeTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.101 s <<< FAILURE! -- in service.LibraryAnalyticsTest$FinalChallengeTests
+service.LibraryAnalyticsTest$FinalChallengeTests.testCategoryWiseTopRatedBookByEachAuthor -- Time elapsed: 1.071 s <<< ERROR!
+org.mockito.exceptions.misusing.UnnecessaryStubbingException: 
+
+Unnecessary stubbings detected.
+Clean & maintainable test code requires zero unnecessary code.
+Following stubbings are unnecessary (click to navigate to relevant line of code):
+  1. -> at service.LibraryAnalyticsTest$FinalChallengeTests.testCategoryWiseTopRatedBookByEachAuthor(LibraryAnalyticsTest.java:335)
+Please remove unnecessary stubbings or use 'lenient' strictness. More info: javadoc for UnnecessaryStubbingException class.
+	at org.mockito.junit.jupiter.MockitoExtension.afterEach(MockitoExtension.java:197)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
