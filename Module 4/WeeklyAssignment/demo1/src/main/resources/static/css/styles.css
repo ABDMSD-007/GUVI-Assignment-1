@@ -1,0 +1,118 @@
+:root {
+  --brand: #0d6efd;
+  --brand-dark: #0a58ca;
+  --accent: #20c997;
+  --dark: #1b2a4a;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: #2c3345;
+}
+
+/* Navbar */
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.navbar .nav-link.active {
+  font-weight: 600;
+  color: #fff !important;
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, var(--dark) 0%, var(--brand-dark) 100%);
+  color: #fff;
+  padding: 6rem 0;
+}
+
+.hero h1 {
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+}
+
+.hero .lead {
+  opacity: 0.9;
+}
+
+/* Section spacing */
+.section {
+  padding: 4.5rem 0;
+}
+
+.section-title {
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.section-subtitle {
+  color: #6c757d;
+  max-width: 640px;
+  margin: 0 auto 2.5rem;
+}
+
+/* Feature cards */
+.feature-card {
+  border: none;
+  border-radius: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 100%;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 1rem 2rem rgba(27, 42, 74, 0.12);
+}
+
+.feature-icon {
+  width: 56px;
+  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(13, 110, 253, 0.1);
+  color: var(--brand);
+  font-size: 1.5rem;
+}
+
+/* Page header for inner pages */
+.page-header {
+  background: linear-gradient(135deg, var(--dark) 0%, var(--brand-dark) 100%);
+  color: #fff;
+  padding: 3.5rem 0;
+}
+
+/* Stats */
+.stat h2 {
+  font-weight: 700;
+  color: var(--brand);
+}
+
+/* Footer */
+.footer {
+  background: var(--dark);
+  color: #cdd5e4;
+}
+
+.footer a {
+  color: #cdd5e4;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #fff;
+}
+
+/* Team / about avatars */
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #fff;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
