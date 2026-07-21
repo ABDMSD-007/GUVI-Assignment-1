@@ -1,0 +1,100 @@
+<div class="container py-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+    <h1 class="h4 fw-bold mb-0">My Loans</h1>
+    <button class="btn btn-sm btn-outline-secondary" (click)="load()">
+      <i class="bi bi-arrow-clockwise"></i> Refresh
+    </button>
+  </div>
+
+  @if (actionMessage()) {
+    <div class="alert alert-success" role="alert">{{ actionMessage() }}</div>
+  }
+  @if (errorMessage()) {
+    <div class="alert alert-danger" role="alert">{{ errorMessage() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="text-center text-muted py-5"><div class="spinner-border" role="status"></div></div>
+  } @else {
+    @for (a of accounts(); track a.loanAccountId) {
+      <div class="card shadow-sm border-0 mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+            <div>
+              <h2 class="h6 fw-bold mb-1">Loan {{ a.loanNumber }}</h2>
+              <span class="badge" [ngClass]="statusBadge(a.status)">{{ a.status }}</span>
+            </div>
+            <button class="btn btn-sm btn-outline-dark" (click)="toggleSchedule(a)">
+              <i class="bi" [ngClass]="openId() === a.loanAccountId ? 'bi-chevron-up' : 'bi-list-ol'"></i>
+              EMI schedule
+            </button>
+          </div>
+
+          <div class="row mt-3 g-3 small">
+            <div class="col-6 col-md-3"><span class="text-muted d-block">Approved amount</span>{{ a.approvedAmount | number:'1.0-2' }}</div>
+            <div class="col-6 col-md-3"><span class="text-muted d-block">Interest rate</span>{{ a.interestRate }}%</div>
+            <div class="col-6 col-md-3"><span class="text-muted d-block">Tenure</span>{{ a.tenureMonths }} months</div>
+            <div class="col-6 col-md-3"><span class="text-muted d-block">Monthly EMI</span>{{ a.emiAmount | number:'1.0-2' }}</div>
+            <div class="col-6 col-md-3"><span class="text-muted d-block">Disbursed on</span>{{ a.disbursementDate || '—' }}</div>
+            <div class="col-6 col-md-3"><span class="text-muted d-block">Next EMI date</span>{{ a.nextEmiDate || '—' }}</div>
+            <div class="col-6 col-md-3"><span class="text-muted d-block">Start date</span>{{ a.loanStartDate || '—' }}</div>
+            <div class="col-6 col-md-3"><span class="text-muted d-block">Closed on</span>{{ a.loanCloseDate || '—' }}</div>
+          </div>
+
+          @if (openId() === a.loanAccountId) {
+            <hr>
+            @if (scheduleLoading()) {
+              <div class="text-center text-muted py-3"><div class="spinner-border spinner-border-sm" role="status"></div></div>
+            } @else {
+              <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                <h3 class="h6 fw-semibold mb-0">EMI schedule &amp; history</h3>
+                @if (hasPending()) {
+                  <div class="d-flex align-items-center gap-2">
+                    <label class="form-label mb-0 small text-muted">Pay via</label>
+                    <select class="form-select form-select-sm" style="width:auto" [(ngModel)]="payType" name="payType">
+                      @for (t of paymentTypes; track t) { <option [value]="t">{{ t }}</option> }
+                    </select>
+                    <button class="btn btn-sm btn-success" (click)="payNext(a.loanAccountId)" [disabled]="paying()">
+                      <i class="bi bi-cash-coin"></i> Pay next EMI
+                    </button>
+                  </div>
+                }
+              </div>
+              <div class="table-responsive">
+                <table class="table table-sm align-middle mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th>#</th><th>Due</th><th>Paid on</th><th class="text-end">EMI</th>
+                      <th class="text-end">Principal</th><th class="text-end">Interest</th>
+                      <th class="text-end">Penalty</th><th class="text-end">Total</th><th>Mode</th><th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (e of schedule(); track e.paymentId) {
+                      <tr>
+                        <td>{{ e.installmentNo }}</td>
+                        <td>{{ e.dueDate || '—' }}</td>
+                        <td>{{ e.paymentDate || '—' }}</td>
+                        <td class="text-end">{{ e.emiAmount | number:'1.0-2' }}</td>
+                        <td class="text-end">{{ e.principalPaid | number:'1.0-2' }}</td>
+                        <td class="text-end">{{ e.interestPaid | number:'1.0-2' }}</td>
+                        <td class="text-end">{{ e.penaltyPaid | number:'1.0-2' }}</td>
+                        <td class="text-end">{{ e.totalPaid | number:'1.0-2' }}</td>
+                        <td>{{ e.paymentType || '—' }}</td>
+                        <td><span class="badge" [ngClass]="emiBadge(e.status)">{{ e.status }}</span></td>
+                      </tr>
+                    } @empty {
+                      <tr><td colspan="10" class="text-center text-muted py-3">No installments generated yet.</td></tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    } @empty {
+      <p class="text-center text-muted py-5">You have no sanctioned loans yet.</p>
+    }
+  }
+</div>

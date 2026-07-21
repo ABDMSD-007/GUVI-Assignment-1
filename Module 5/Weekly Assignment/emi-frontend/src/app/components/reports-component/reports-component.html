@@ -1,0 +1,133 @@
+<div class="container py-4">
+  <h1 class="h4 fw-bold mb-3">Reports &amp; analytics</h1>
+
+  <div class="d-flex flex-wrap gap-2 mb-3">
+    <button class="btn btn-sm" [class.btn-dark]="active()==='branch'" [class.btn-outline-dark]="active()!=='branch'" (click)="load('branch')">Branch collection</button>
+    <button class="btn btn-sm" [class.btn-dark]="active()==='top10'" [class.btn-outline-dark]="active()!=='top10'" (click)="load('top10')">Top 10 branches</button>
+    <button class="btn btn-sm" [class.btn-dark]="active()==='summaries'" [class.btn-outline-dark]="active()!=='summaries'" (click)="load('summaries')">Customer summaries</button>
+    <button class="btn btn-sm" [class.btn-dark]="active()==='monthly'" [class.btn-outline-dark]="active()!=='monthly'" (click)="load('monthly')">Monthly report</button>
+    <button class="btn btn-sm" [class.btn-dark]="active()==='overdue'" [class.btn-outline-dark]="active()!=='overdue'" (click)="load('overdue')">Overdue loans</button>
+    <button class="btn btn-sm" [class.btn-dark]="active()==='noPenalty'" [class.btn-outline-dark]="active()!=='noPenalty'" (click)="load('noPenalty')">No-penalty loans</button>
+    <button class="btn btn-sm" [class.btn-dark]="active()==='eligible'" [class.btn-outline-dark]="active()!=='eligible'" (click)="load('eligible')">Eligible customers</button>
+    <button class="btn btn-sm" [class.btn-dark]="active()==='multiTypes'" [class.btn-outline-dark]="active()!=='multiTypes'" (click)="load('multiTypes')">Multiple loan types</button>
+    <button class="btn btn-sm" [class.btn-dark]="active()==='latest'" [class.btn-outline-dark]="active()!=='latest'" (click)="load('latest')">Latest payment</button>
+    <button class="btn btn-sm" [class.btn-dark]="active()==='top5'" [class.btn-outline-dark]="active()!=='top5'" (click)="load('top5')">Top 5 by EMI</button>
+    <button class="btn btn-sm" [class.btn-dark]="active()==='byBranch'" [class.btn-outline-dark]="active()!=='byBranch'" (click)="select('byBranch')">Customers by branch</button>
+    <button class="btn btn-sm" [class.btn-dark]="active()==='minLoans'" [class.btn-outline-dark]="active()!=='minLoans'" (click)="select('minLoans')">Customers by min loans</button>
+  </div>
+
+  <!-- Parameterised inputs -->
+  @if (active() === 'byBranch') {
+    <div class="input-group mb-3" style="max-width:420px">
+      <input type="text" class="form-control" placeholder="Branch name" [(ngModel)]="branchInput" name="branchInput">
+      <button class="btn btn-dark" (click)="load('byBranch')" [disabled]="!branchInput">Search</button>
+    </div>
+  }
+  @if (active() === 'minLoans') {
+    <div class="input-group mb-3" style="max-width:420px">
+      <input type="number" class="form-control" placeholder="Minimum loans" [(ngModel)]="minLoansInput" name="minLoansInput" min="0">
+      <button class="btn btn-dark" (click)="load('minLoans')">Search</button>
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <div class="alert alert-danger" role="alert">{{ errorMessage() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="text-center text-muted py-5"><div class="spinner-border" role="status"></div></div>
+  } @else {
+    <div class="card shadow-sm border-0">
+      <div class="table-responsive">
+        <!-- Branch collection / Top 10 branches -->
+        @if (active() === 'branch' || active() === 'top10') {
+          <table class="table table-hover mb-0">
+            <thead class="table-light"><tr><th>Branch</th><th class="text-end">Total collected</th></tr></thead>
+            <tbody>
+              @for (row of branchCollections(); track row.branchName) {
+                <tr><td>{{ row.branchName }}</td><td class="text-end">{{ row.totalCollected | number:'1.0-2' }}</td></tr>
+              } @empty { <tr><td colspan="2" class="text-center text-muted py-4">No data.</td></tr> }
+            </tbody>
+          </table>
+        }
+
+        <!-- Customer summaries -->
+        @if (active() === 'summaries') {
+          <table class="table table-hover mb-0">
+            <thead class="table-light"><tr><th>Customer</th><th>Branch</th><th class="text-end">Loans</th><th class="text-end">EMI paid</th><th class="text-end">Penalty paid</th></tr></thead>
+            <tbody>
+              @for (row of customerSummaries(); track row.customerName) {
+                <tr><td>{{ row.customerName }}</td><td>{{ row.branchName }}</td><td class="text-end">{{ row.numberOfLoans }}</td><td class="text-end">{{ row.totalEMIPaid | number:'1.0-2' }}</td><td class="text-end">{{ row.totalPenaltyPaid | number:'1.0-2' }}</td></tr>
+              } @empty { <tr><td colspan="5" class="text-center text-muted py-4">No data.</td></tr> }
+            </tbody>
+          </table>
+        }
+
+        <!-- Monthly report -->
+        @if (active() === 'monthly') {
+          <table class="table table-hover mb-0">
+            <thead class="table-light"><tr><th>Year</th><th>Month</th><th class="text-end">Total collected</th></tr></thead>
+            <tbody>
+              @for (row of monthly(); track $index) {
+                <tr><td>{{ row.year }}</td><td>{{ row.month }}</td><td class="text-end">{{ row.totalCollected | number:'1.0-2' }}</td></tr>
+              } @empty { <tr><td colspan="3" class="text-center text-muted py-4">No data.</td></tr> }
+            </tbody>
+          </table>
+        }
+
+        <!-- Loan lists: overdue / no-penalty -->
+        @if (active() === 'overdue' || active() === 'noPenalty') {
+          <table class="table table-hover mb-0">
+            <thead class="table-light"><tr><th>#</th><th>Type</th><th class="text-end">Principal</th><th class="text-end">EMI</th><th>Status</th></tr></thead>
+            <tbody>
+              @for (l of loans(); track l.loanId) {
+                <tr><td>{{ l.loanId }}</td><td>{{ l.loanType }}</td><td class="text-end">{{ l.principalAmount | number:'1.0-2' }}</td><td class="text-end">{{ l.emiAmount | number:'1.0-2' }}</td><td>{{ l.loanStatus }}</td></tr>
+              } @empty { <tr><td colspan="5" class="text-center text-muted py-4">No data.</td></tr> }
+            </tbody>
+          </table>
+        }
+
+        <!-- Customer lists -->
+        @if (active() === 'eligible' || active() === 'multiTypes' || active() === 'byBranch' || active() === 'minLoans') {
+          <table class="table table-hover mb-0">
+            <thead class="table-light"><tr><th>#</th><th>Name</th><th>Email</th><th>Branch</th><th class="text-end">Credit</th></tr></thead>
+            <tbody>
+              @for (c of customers(); track c.customerId) {
+                <tr><td>{{ c.customerId }}</td><td>{{ c.customerName }}</td><td>{{ c.email }}</td><td>{{ c.branchName }}</td><td class="text-end">{{ c.creditScore }}</td></tr>
+              } @empty { <tr><td colspan="5" class="text-center text-muted py-4">No data.</td></tr> }
+            </tbody>
+          </table>
+        }
+
+        <!-- Latest payment -->
+        @if (active() === 'latest') {
+          @if (latestPayment(); as t) {
+            <table class="table mb-0">
+              <tbody>
+                <tr><th>Installment</th><td>{{ t.installmentNumber }}</td></tr>
+                <tr><th>Amount</th><td>{{ t.amountPaid | number:'1.0-2' }}</td></tr>
+                <tr><th>Date</th><td>{{ t.paymentDate }}</td></tr>
+                <tr><th>Mode</th><td>{{ t.paymentMode }}</td></tr>
+                <tr><th>Status</th><td>{{ t.paymentStatus }}</td></tr>
+              </tbody>
+            </table>
+          } @else {
+            <p class="text-center text-muted py-4 mb-0">No payment found.</p>
+          }
+        }
+
+        <!-- Top 5 by EMI (raw Object[] rows) -->
+        @if (active() === 'top5') {
+          <table class="table table-hover mb-0">
+            <thead class="table-light"><tr><th>Row</th></tr></thead>
+            <tbody>
+              @for (row of top5(); track $index) {
+                <tr><td><code>{{ row | json }}</code></td></tr>
+              } @empty { <tr><td class="text-center text-muted py-4">No data.</td></tr> }
+            </tbody>
+          </table>
+        }
+      </div>
+    </div>
+  }
+</div>

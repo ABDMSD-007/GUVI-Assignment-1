@@ -1,0 +1,115 @@
+<div class="container py-4">
+  @if (greeting()) {
+    <div class="alert alert-success" role="alert">{{ greeting() }}</div>
+  }
+  @if (errorMessage()) {
+    <div class="alert alert-danger" role="alert">{{ errorMessage() }}</div>
+  }
+
+  <h1 class="h4 fw-bold mb-3">Loan Management Portal</h1>
+
+  <h2 class="h6 text-muted text-uppercase mb-2">For customers</h2>
+  <div class="row g-3">
+    <div class="col-12 col-sm-6 col-lg-4">
+      <a routerLink="/products" class="text-decoration-none">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <i class="bi bi-grid fs-3 text-dark"></i>
+            <h2 class="h6 fw-bold mt-2 mb-1">Loan Products</h2>
+            <p class="text-muted small mb-0">Browse available schemes and apply for a loan.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-4">
+      <a routerLink="/my-applications" class="text-decoration-none">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <i class="bi bi-file-earmark-text fs-3 text-dark"></i>
+            <h2 class="h6 fw-bold mt-2 mb-1">My Applications</h2>
+            <p class="text-muted small mb-0">Track application status and underwriter remarks.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-4">
+      <a routerLink="/my-loans" class="text-decoration-none">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <i class="bi bi-cash-stack fs-3 text-dark"></i>
+            <h2 class="h6 fw-bold mt-2 mb-1">My Loans</h2>
+            <p class="text-muted small mb-0">View sanctioned loans, EMI schedule and pay EMIs.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  @if (isUnderwriter() || isManager() || isAdmin()) {
+    <h2 class="h6 text-muted text-uppercase mb-2 mt-4">Staff</h2>
+    <div class="row g-3">
+      @if (isUnderwriter()) {
+        <div class="col-12 col-sm-6 col-lg-4">
+          <a routerLink="/underwriter" class="text-decoration-none">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body">
+                <i class="bi bi-clipboard-check fs-3 text-dark"></i>
+                <h2 class="h6 fw-bold mt-2 mb-1">Underwriting</h2>
+                <p class="text-muted small mb-0">Review pending applications, approve or reject.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      }
+      @if (isManager()) {
+        <div class="col-12 col-sm-6 col-lg-4">
+          <a routerLink="/portfolio" class="text-decoration-none">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body">
+                <i class="bi bi-briefcase fs-3 text-dark"></i>
+                <h2 class="h6 fw-bold mt-2 mb-1">Portfolio</h2>
+                <p class="text-muted small mb-0">Approved loans, disbursement and status.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <a routerLink="/dashboard" class="text-decoration-none">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body">
+                <i class="bi bi-speedometer2 fs-3 text-dark"></i>
+                <h2 class="h6 fw-bold mt-2 mb-1">Dashboard</h2>
+                <p class="text-muted small mb-0">Aggregated portfolio analytics.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <a routerLink="/reports" class="text-decoration-none">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body">
+                <i class="bi bi-bar-chart-line fs-3 text-dark"></i>
+                <h2 class="h6 fw-bold mt-2 mb-1">Reports</h2>
+                <p class="text-muted small mb-0">Branch collections, summaries and more.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      }
+      @if (isAdmin()) {
+        <div class="col-12 col-sm-6 col-lg-4">
+          <a routerLink="/admin/products" class="text-decoration-none">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body">
+                <i class="bi bi-gear fs-3 text-dark"></i>
+                <h2 class="h6 fw-bold mt-2 mb-1">Manage Products</h2>
+                <p class="text-muted small mb-0">Create, update and deactivate loan products.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      }
+    </div>
+  }
+</div>
+

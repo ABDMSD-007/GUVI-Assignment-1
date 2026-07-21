@@ -1,0 +1,108 @@
+<div class="bg-light d-flex align-items-center min-vh-100 py-4">
+  <main class="container">
+    <div class="row justify-content-center w-100 m-0">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+
+        <div class="text-center mb-4">
+          <div class="d-inline-flex align-items-center justify-content-center bg-dark text-white rounded-circle p-3 mb-2 shadow-sm">
+            <i class="bi bi-person-plus-fill fs-3"></i>
+          </div>
+          <h1 class="h3 mb-1 fw-bold text-dark">Create your account</h1>
+          <p class="text-muted small">Registration Endpoint: <code>POST /customers/register</code></p>
+        </div>
+
+        <div class="card shadow border-0">
+          <div class="card-body p-4 p-sm-5">
+
+            @if (successMessage()) {
+              <div class="alert alert-success d-flex align-items-center" role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i>
+                <div>{{ successMessage() }}</div>
+              </div>
+            }
+            @if (errorMessage()) {
+              <div class="alert alert-danger d-flex align-items-center" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <div>{{ errorMessage() }}</div>
+              </div>
+            }
+
+            <form #form="ngForm" (ngSubmit)="onSubmit(form.valid)"
+                  [ngClass]="{'was-validated': formSubmitted}" novalidate>
+
+              <div class="mb-3">
+                <label for="customerName" class="form-label fw-medium">Full name</label>
+                <input type="text" class="form-control" id="customerName" name="customerName"
+                       [(ngModel)]="customer.customerName" required>
+                <div class="invalid-feedback">Please enter your name.</div>
+              </div>
+
+              <div class="mb-3">
+                <label for="email" class="form-label fw-medium">Email (used to sign in)</label>
+                <input type="email" class="form-control" id="email" name="email"
+                       [(ngModel)]="customer.email" required email>
+                <div class="invalid-feedback">Please enter a valid email.</div>
+              </div>
+
+              <div class="mb-3">
+                <label for="password" class="form-label fw-medium">Password</label>
+                <div class="input-group has-validation">
+                  <input [type]="hidePassword ? 'password' : 'text'" class="form-control"
+                         id="password" name="password" [(ngModel)]="customer.password"
+                         required minlength="4" autocomplete="new-password">
+                  <button class="btn btn-outline-secondary" type="button"
+                          (click)="togglePasswordVisibility()" aria-label="Toggle password visibility">
+                    <i class="bi" [ngClass]="hidePassword ? 'bi-eye' : 'bi-eye-slash'"></i>
+                  </button>
+                  <div class="invalid-feedback">Password must be at least 4 characters.</div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="mobileNumber" class="form-label fw-medium">Mobile number</label>
+                <input type="text" class="form-control" id="mobileNumber" name="mobileNumber"
+                       [(ngModel)]="customer.mobileNumber" required pattern="\d{10}">
+                <div class="invalid-feedback">Enter a 10-digit mobile number.</div>
+              </div>
+
+              <div class="mb-3">
+                <label for="branchName" class="form-label fw-medium">Branch</label>
+                <input type="text" class="form-control" id="branchName" name="branchName"
+                       [(ngModel)]="customer.branchName" required>
+                <div class="invalid-feedback">Please enter your branch.</div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-6 mb-3">
+                  <label for="creditScore" class="form-label fw-medium">Credit score</label>
+                  <input type="number" class="form-control" id="creditScore" name="creditScore"
+                         [(ngModel)]="customer.creditScore" min="0" max="900">
+                </div>
+                <div class="col-sm-6 mb-3">
+                  <label for="role" class="form-label fw-medium">Role</label>
+                  <select class="form-select" id="role" name="role" [(ngModel)]="customer.role">
+                    @for (r of roles; track r) {
+                      <option [value]="r">{{ r }}</option>
+                    }
+                  </select>
+                </div>
+              </div>
+
+              <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-dark py-2 fw-semibold shadow-sm">
+                  Create account <i class="bi bi-arrow-right-short ms-1"></i>
+                </button>
+              </div>
+
+              <p class="text-center text-muted small mb-0">
+                Already have an account? <a routerLink="/login">Sign in</a>
+              </p>
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>

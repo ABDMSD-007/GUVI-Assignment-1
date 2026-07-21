@@ -1,0 +1,53 @@
+<div class="container py-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+    <h1 class="h4 fw-bold mb-0">My Loan Applications</h1>
+    <a routerLink="/products" class="btn btn-sm btn-dark"><i class="bi bi-plus-lg"></i> New application</a>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert alert-danger" role="alert">{{ errorMessage() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="text-center text-muted py-5"><div class="spinner-border" role="status"></div></div>
+  } @else {
+    <div class="card shadow-sm border-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>#</th>
+              <th>Product</th>
+              <th class="text-end">Requested</th>
+              <th class="text-end">Tenure</th>
+              <th>Applied</th>
+              <th>Status</th>
+              <th>Underwriter remarks</th>
+              <th>Account</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (a of applications(); track a.applicationId) {
+              <tr>
+                <td>{{ a.applicationId }}</td>
+                <td>{{ a.loanName || a.loanCode }}<br><small class="text-muted"><code>{{ a.loanCode }}</code></small></td>
+                <td class="text-end">{{ a.requestedAmount | number:'1.0-2' }}</td>
+                <td class="text-end">{{ a.tenureMonths }} mo</td>
+                <td>{{ a.applicationDate }}</td>
+                <td><span class="badge" [ngClass]="badgeClass(a.status)">{{ a.status }}</span></td>
+                <td class="small">{{ a.remarks || '—' }}</td>
+                <td>
+                  @if (a.loanAccountId) {
+                    <a routerLink="/my-loans" class="badge text-bg-info text-decoration-none">#{{ a.loanAccountId }}</a>
+                  } @else { — }
+                </td>
+              </tr>
+            } @empty {
+              <tr><td colspan="8" class="text-center text-muted py-4">You have no applications yet.</td></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+</div>

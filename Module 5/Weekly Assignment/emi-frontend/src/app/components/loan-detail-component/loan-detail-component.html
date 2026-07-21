@@ -1,0 +1,125 @@
+<div class="container py-4">
+  <a routerLink="/loans" class="btn btn-link px-0 mb-2"><i class="bi bi-chevron-left"></i> Back to loans</a>
+
+  @if (errorMessage()) {
+    <div class="alert alert-danger" role="alert">{{ errorMessage() }}</div>
+  }
+  @if (actionMessage()) {
+    <div class="alert alert-success" role="alert">{{ actionMessage() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="text-center text-muted py-5">
+      <div class="spinner-border" role="status"></div>
+    </div>
+  } @else if (loan(); as l) {
+    <div class="card shadow-sm border-0 mb-4">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+          <div>
+            <h1 class="h4 fw-bold mb-1">Loan #{{ l.loanId }}</h1>
+            <span class="badge text-bg-secondary me-1">{{ l.loanType }}</span>
+            <span class="badge text-bg-dark">{{ l.loanStatus }}</span>
+          </div>
+          <div class="btn-group">
+            @if (isManager()) {
+              <button class="btn btn-sm btn-outline-success" (click)="approve()">Approve</button>
+              <button class="btn btn-sm btn-outline-warning" (click)="foreclose()">Foreclose</button>
+            }
+            @if (isAdmin()) {
+              <button class="btn btn-sm btn-outline-danger" (click)="remove()">Delete</button>
+            }
+          </div>
+        </div>
+
+        <div class="row mt-3 g-3">
+          <div class="col-6 col-md-3"><small class="text-muted d-block">Principal</small>{{ l.principalAmount | number:'1.0-2' }}</div>
+          <div class="col-6 col-md-3"><small class="text-muted d-block">Interest rate</small>{{ l.interestRate }}%</div>
+          <div class="col-6 col-md-3"><small class="text-muted d-block">Tenure</small>{{ l.tenureMonths }} months</div>
+          <div class="col-6 col-md-3"><small class="text-muted d-block">EMI amount</small>{{ l.emiAmount | number:'1.0-2' }}</div>
+          @if (l.customer) {
+            <div class="col-6 col-md-3"><small class="text-muted d-block">Customer</small>{{ l.customer.customerName }}</div>
+            <div class="col-6 col-md-3"><small class="text-muted d-block">Branch</small>{{ l.customer.branchName }}</div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- EMI schedule -->
+      <div class="col-lg-7">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-header bg-white fw-semibold">EMI schedule</div>
+          <div class="table-responsive">
+            <table class="table table-sm mb-0 align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>Inst.</th>
+                  <th class="text-end">Amount</th>
+                  <th>Date</th>
+                  <th>Mode</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (t of schedule(); track t.transactionId) {
+                  <tr>
+                    <td>{{ t.installmentNumber }}</td>
+                    <td class="text-end">{{ t.amountPaid | number:'1.0-2' }}</td>
+                    <td>{{ t.paymentDate }}</td>
+                    <td>{{ t.paymentMode }}</td>
+                    <td><span class="badge text-bg-light border">{{ t.paymentStatus }}</span></td>
+                  </tr>
+                } @empty {
+                  <tr><td colspan="5" class="text-center text-muted py-3">No installments yet.</td></tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pay EMI -->
+      <div class="col-lg-5">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-header bg-white fw-semibold">Pay an EMI</div>
+          <div class="card-body">
+            <form #payForm="ngForm" (ngSubmit)="payEmi(payForm.valid)"
+                  [ngClass]="{'was-validated': formSubmitted}" novalidate>
+              <div class="mb-2">
+                <label class="form-label small">Installment number</label>
+                <input type="number" class="form-control" name="installmentNumber"
+                       [(ngModel)]="emi.installmentNumber" required min="1">
+              </div>
+              <div class="mb-2">
+                <label class="form-label small">Amount paid</label>
+                <input type="number" class="form-control" name="amountPaid"
+                       [(ngModel)]="emi.amountPaid" required min="1">
+              </div>
+              <div class="mb-2">
+                <label class="form-label small">Payment date</label>
+                <input type="date" class="form-control" name="paymentDate"
+                       [(ngModel)]="emi.paymentDate" required>
+              </div>
+              <div class="mb-2">
+                <label class="form-label small">Mode</label>
+                <select class="form-select" name="paymentMode" [(ngModel)]="emi.paymentMode" required>
+                  @for (m of paymentModes; track m) { <option [value]="m">{{ m }}</option> }
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small">Status</label>
+                <select class="form-select" name="paymentStatus" [(ngModel)]="emi.paymentStatus" required>
+                  @for (s of paymentStatuses; track s) { <option [value]="s">{{ s }}</option> }
+                </select>
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-dark">Record payment</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

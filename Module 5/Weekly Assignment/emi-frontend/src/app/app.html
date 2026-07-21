@@ -1,0 +1,45 @@
+﻿<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold" routerLink="/welcome">
+      <i class="bi bi-bank2 me-1"></i> EMI Portal
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      @if (isLoggedIn()) {
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" routerLink="/welcome" routerLinkActive="active">Home</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/products" routerLinkActive="active">Products</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/my-applications" routerLinkActive="active">My Applications</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/my-loans" routerLinkActive="active">My Loans</a></li>
+          @if (isUnderwriter()) {
+            <li class="nav-item"><a class="nav-link" routerLink="/underwriter" routerLinkActive="active">Underwriting</a></li>
+          }
+          @if (isManager()) {
+            <li class="nav-item"><a class="nav-link" routerLink="/portfolio" routerLinkActive="active">Portfolio</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="/reports" routerLinkActive="active">Reports</a></li>
+          }
+          @if (isAdmin()) {
+            <li class="nav-item"><a class="nav-link" routerLink="/admin/products" routerLinkActive="active">Manage Products</a></li>
+          }
+        </ul>
+      }
+      <ul class="navbar-nav ms-auto">
+        @if (!isLoggedIn()) {
+          <li class="nav-item"><a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a></li>
+          <li class="nav-item"><a class="btn btn-sm btn-light ms-lg-2" routerLink="/login">Login</a></li>
+        } @else {
+          @if (role()) {
+            <li class="nav-item d-flex align-items-center"><span class="badge text-bg-secondary me-lg-2">{{ role() }}</span></li>
+          }
+          <li class="nav-item"><a class="btn btn-sm btn-outline-light" routerLink="/logout">Logout</a></li>
+        }
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

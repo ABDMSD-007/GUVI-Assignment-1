@@ -1,0 +1,92 @@
+<div class="container py-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+    <h1 class="h4 fw-bold mb-0">Loans</h1>
+    <div class="d-flex align-items-center gap-2">
+      @if (isManager()) {
+        <button class="btn btn-sm btn-outline-warning" (click)="increaseInterest()">
+          <i class="bi bi-graph-up-arrow"></i> +0.5% personal interest
+        </button>
+      }
+      <label for="typeFilter" class="form-label mb-0 small text-muted">Type</label>
+      <select id="typeFilter" class="form-select form-select-sm" style="width:auto"
+              [(ngModel)]="typeFilter" (ngModelChange)="onFilterChange()">
+        <option value="">All (paginated)</option>
+        @for (t of loanTypes; track t) {
+          <option [value]="t">{{ t }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  @if (actionMessage()) {
+    <div class="alert alert-success" role="alert">{{ actionMessage() }}</div>
+  }
+  @if (errorMessage()) {
+    <div class="alert alert-danger" role="alert">{{ errorMessage() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="text-center text-muted py-5">
+      <div class="spinner-border" role="status"></div>
+      <p class="mt-2 mb-0">Loading loans...</p>
+    </div>
+  } @else {
+    <div class="card shadow-sm border-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>#</th>
+              <th>Type</th>
+              <th class="text-end">Principal</th>
+              <th class="text-end">Rate %</th>
+              <th class="text-end">Tenure</th>
+              <th class="text-end">EMI</th>
+              <th>Status</th>
+              <th class="text-end">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (loan of loans(); track loan.loanId) {
+              <tr>
+                <td>{{ loan.loanId }}</td>
+                <td>{{ loan.loanType }}</td>
+                <td class="text-end">{{ loan.principalAmount | number:'1.0-2' }}</td>
+                <td class="text-end">{{ loan.interestRate }}</td>
+                <td class="text-end">{{ loan.tenureMonths }} mo</td>
+                <td class="text-end">{{ loan.emiAmount | number:'1.0-2' }}</td>
+                <td><span class="badge text-bg-secondary">{{ loan.loanStatus }}</span></td>
+                <td class="text-end">
+                  <a class="btn btn-sm btn-outline-dark" [routerLink]="['/loans', loan.loanId]">
+                    View
+                  </a>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="8" class="text-center text-muted py-4">No loans found.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    @if (typeFilter === '') {
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <small class="text-muted">
+          Page {{ page() + 1 }} of {{ totalPages() || 1 }} · {{ totalElements() }} total
+        </small>
+        <div class="btn-group">
+          <button class="btn btn-outline-dark btn-sm" (click)="prev()" [disabled]="page() === 0">
+            <i class="bi bi-chevron-left"></i> Prev
+          </button>
+          <button class="btn btn-outline-dark btn-sm" (click)="next()"
+                  [disabled]="page() >= totalPages() - 1">
+            Next <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    }
+  }
+</div>

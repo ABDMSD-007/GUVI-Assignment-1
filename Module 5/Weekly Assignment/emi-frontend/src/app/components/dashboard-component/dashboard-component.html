@@ -1,0 +1,89 @@
+<div class="container py-4">
+  <h1 class="h4 fw-bold mb-3">Dashboard</h1>
+  <p class="text-muted small">Requires the <code>MANAGER</code> role.</p>
+
+  @if (errorMessage()) {
+    <div class="alert alert-danger" role="alert">{{ errorMessage() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="text-center text-muted py-5">
+      <div class="spinner-border" role="status"></div>
+    </div>
+  } @else if (data(); as d) {
+    <div class="row g-3">
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <small class="text-muted d-block">Total customers</small>
+            <span class="h4 fw-bold">{{ d.totalCustomers }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <small class="text-muted d-block">Active loans</small>
+            <span class="h4 fw-bold text-success">{{ d.activeLoans }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <small class="text-muted d-block">Closed loans</small>
+            <span class="h4 fw-bold">{{ d.closedLoans }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <small class="text-muted d-block">Defaulted loans</small>
+            <span class="h4 fw-bold text-danger">{{ d.defaultedLoans }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <small class="text-muted d-block">EMI collected</small>
+            <span class="h5 fw-bold">{{ d.totalEMICollected | number:'1.0-2' }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <small class="text-muted d-block">Penalty collected</small>
+            <span class="h5 fw-bold">{{ d.totalPenaltyCollected | number:'1.0-2' }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <small class="text-muted d-block">Highest loan amount</small>
+            <span class="h5 fw-bold">{{ d.highestLoanAmount | number:'1.0-2' }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <small class="text-muted d-block">Top branch</small>
+            <span class="h6 fw-bold">{{ d.topBranch || '—' }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-8 col-lg-6">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body">
+            <small class="text-muted d-block">Highest paying customer</small>
+            <span class="h6 fw-bold">{{ d.highestPayingCustomer || '—' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
