@@ -1,0 +1,85 @@
+{
+  "numpy_statistics": {
+    "mean_investment_amount": 2843.61,
+    "median_investor_income": 1170000.0,
+    "std_dev_nav": 13.4023,
+    "fund_returns_90th_percentile": 3.4385,
+    "fund_returns_95th_percentile": 3.4526,
+    "income_investment_correlation": -0.1919,
+    "average_daily_nav": 35.12
+  },
+  "fund_ranking": {
+    "best_performing_fund": {
+      "FundID": "F102",
+      "FundName": "Bluechip Equity Fund",
+      "Category": "Equity",
+      "ReturnPct": 3.47
+    },
+    "worst_performing_fund": {
+      "FundID": "F105",
+      "FundName": "Small Cap Opportunities",
+      "Category": "Equity",
+      "ReturnPct": 2.19
+    },
+    "highest_expense_ratio_fund": {
+      "FundID": "F150",
+      "FundName": "Emerging Markets Fund",
+      "Category": "International",
+      "ExpenseRatio": 1.88
+    },
+    "highest_aum_fund": {
+      "FundID": "F105",
+      "FundName": "Small Cap Opportunities",
+      "Category": "Equity",
+      "AUM": 33051.0
+    },
+    "most_popular_fund": {
+      "FundID": "F101",
+      "FundName": "Alpha Growth Fund",
+      "Category": "Equity",
+      "TransactionCount": 10.0
+    }
+  },
+  "finance_metrics": {
+    "total_portfolio_value": 94046.8,
+    "total_invested": 92732.5,
+    "absolute_return": 1314.3,
+    "portfolio_return_pct": 1.42,
+    "cagr_pct": 76.96,
+    "annualized_return_pct": 200.16,
+    "diversification_score": 0.7329,
+    "average_holding_period_days": 4.7,
+    "expense_ratio_impact": 1090.2,
+    "sharpe_ratio": -4.6135
+  },
+  "outlier_info": {
+    "amount_99pct_cutoff": 5890.29,
+    "amount_outliers_removed": 1,
+    "nav_outliers_removed": 0
+  },
+  "category_wise_investment_pct": {
+    "Equity": 61.19,
+    "Hybrid": 32.55,
+    "Debt": 6.26
+  },
+  "fund_allocation_pct": {
+    "F105": 35.14,
+    "F103": 32.5,
+    "F101": 13.27,
+    "F102": 12.79,
+    "F104": 6.29
+  },
+  "high_value_investor_count": 0,
+  "top20_investor_ids": [
+    "INV004",
+    "INV001",
+    "INV006",
+    "INV007",
+    "INV009",
+    "INV010",
+    "INV002",
+    "INV003",
+    "INV005",
+    "INV008"
+  ]
+}

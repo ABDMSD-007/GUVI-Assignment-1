@@ -1,0 +1,41 @@
+2026-07-21 17:36:35,063 | INFO    | === Mutual Fund Dashboard: START ===
+2026-07-21 17:36:35,072 | INFO    | Loaded investors       50 rows
+2026-07-21 17:36:35,075 | INFO    | Loaded funds           50 rows
+2026-07-21 17:36:35,083 | INFO    | Loaded transactions    50 rows
+2026-07-21 17:36:35,087 | INFO    | Loaded nav_history     50 rows
+2026-07-21 17:36:35,092 | INFO    | Imputed missing values (income->median, expense->mean, NAV->previous day, risk->Moderate)
+2026-07-21 17:36:35,095 | INFO    | Removed 0 duplicate transactions
+2026-07-21 17:36:35,099 | INFO    | Removed 1 amount outliers (>99pct=5890.29) and 0 NAV-change outliers (>3 sigma)
+2026-07-21 17:36:35,131 | INFO    | Computed NumPy statistics
+2026-07-21 17:36:35,134 | INFO    | Ranked funds (best / worst / expense / AUM / popular)
+2026-07-21 17:36:35,773 | INFO    | Generated 7 charts in c:\Users\akshat.singh\Downloads\PYTHON_ASSESSMENT\ASSESSMENT\output\charts
+2026-07-21 17:36:35,779 | WARNING | high_value_investors.csv is open/locked elsewhere -> wrote high_value_investors_20260721_173635.csv instead
+2026-07-21 17:36:36,113 | WARNING | mutual_fund_report.xlsx is open/locked elsewhere -> wrote mutual_fund_report_20260721_173635.xlsx instead
+2026-07-21 17:36:36,117 | INFO    | Exported Excel, CSV and JSON reports to c:\Users\akshat.singh\Downloads\PYTHON_ASSESSMENT\ASSESSMENT\output
+2026-07-21 17:36:36,117 | INFO    | ---- NumPy Statistics ----
+2026-07-21 17:36:36,117 | INFO    |   mean_investment_amount           2843.61
+2026-07-21 17:36:36,117 | INFO    |   median_investor_income           1170000.0
+2026-07-21 17:36:36,117 | INFO    |   std_dev_nav                      13.4023
+2026-07-21 17:36:36,117 | INFO    |   fund_returns_90th_percentile     3.4385
+2026-07-21 17:36:36,117 | INFO    |   fund_returns_95th_percentile     3.4526
+2026-07-21 17:36:36,117 | INFO    |   income_investment_correlation    -0.1919
+2026-07-21 17:36:36,118 | INFO    |   average_daily_nav                35.12
+2026-07-21 17:36:36,118 | INFO    | ---- Fund Ranking ----
+2026-07-21 17:36:36,118 | INFO    |   best_performing_fund         {'FundID': 'F102', 'FundName': 'Bluechip Equity Fund', 'Category': 'Equity', 'ReturnPct': 3.47}
+2026-07-21 17:36:36,118 | INFO    |   worst_performing_fund        {'FundID': 'F105', 'FundName': 'Small Cap Opportunities', 'Category': 'Equity', 'ReturnPct': 2.19}
+2026-07-21 17:36:36,118 | INFO    |   highest_expense_ratio_fund   {'FundID': 'F150', 'FundName': 'Emerging Markets Fund', 'Category': 'International', 'ExpenseRatio': 1.88}
+2026-07-21 17:36:36,118 | INFO    |   highest_aum_fund             {'FundID': 'F105', 'FundName': 'Small Cap Opportunities', 'Category': 'Equity', 'AUM': 33051.0}
+2026-07-21 17:36:36,118 | INFO    |   most_popular_fund            {'FundID': 'F101', 'FundName': 'Alpha Growth Fund', 'Category': 'Equity', 'TransactionCount': 10.0}
+2026-07-21 17:36:36,118 | INFO    | ---- Finance Metrics ----
+2026-07-21 17:36:36,118 | INFO    |   total_portfolio_value            94046.8
+2026-07-21 17:36:36,118 | INFO    |   total_invested                   92732.5
+2026-07-21 17:36:36,118 | INFO    |   absolute_return                  1314.3
+2026-07-21 17:36:36,118 | INFO    |   portfolio_return_pct             1.42
+2026-07-21 17:36:36,118 | INFO    |   cagr_pct                         76.96
+2026-07-21 17:36:36,118 | INFO    |   annualized_return_pct            200.16
+2026-07-21 17:36:36,119 | INFO    |   diversification_score            0.7329
+2026-07-21 17:36:36,119 | INFO    |   average_holding_period_days      4.7
+2026-07-21 17:36:36,119 | INFO    |   expense_ratio_impact             1090.2
+2026-07-21 17:36:36,119 | INFO    |   sharpe_ratio                     -4.6135
+2026-07-21 17:36:36,120 | INFO    | High-value investors: 0 | Charts: 7 | Reports: c:\Users\akshat.singh\Downloads\PYTHON_ASSESSMENT\ASSESSMENT\output
+2026-07-21 17:36:36,120 | INFO    | === Mutual Fund Dashboard: DONE ===
